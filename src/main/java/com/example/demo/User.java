@@ -20,11 +20,11 @@ public class User {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     private String name;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
