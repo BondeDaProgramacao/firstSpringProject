@@ -7,6 +7,7 @@ package com.example.demo;
 
 import java.util.List;
 import java.util.Optional;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,6 +39,7 @@ public class UserController {
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> createUJser(@RequestBody final List<User> users) {
         for (User user : users) {
+            user.setId(ObjectId.get());
             userJPA.save(user);
         }
         return new ResponseEntity<>(users, HttpStatus.CREATED);
@@ -50,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<Optional<User>> getUserById(@PathVariable ObjectId id) throws Exception {
 
         Optional<User> user = userJPA.findById(id);
 
@@ -62,12 +64,12 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable long id) {
+    public void deleteStudent(@PathVariable ObjectId id) {
         userJPA.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateStudent(@RequestBody User user, @PathVariable long id) {
+    public ResponseEntity<User> updateStudent(@RequestBody User user, @PathVariable ObjectId id) {
 
         Optional<User> userOptional = userJPA.findById(id);
 
