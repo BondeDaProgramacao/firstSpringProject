@@ -5,10 +5,11 @@
  */
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -19,17 +20,17 @@ import javax.persistence.Table;
 public class User {
 
     @Id
-    @GeneratedValue
-    private long id;
+    private ObjectId _id;
 
     private String name;
 
-    public long getId() {
-        return id;
+    @JsonIgnore
+    public String getId() {
+        return _id.toHexString();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(ObjectId id) {
+        this._id = id;
     }
 
     public String getName() {
